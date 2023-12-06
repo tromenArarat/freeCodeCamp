@@ -1,0 +1,32 @@
+function whatIsInAName(collection, source) {
+
+        let prop = "";
+        let props = []
+        let arr = []
+        for(let property in source){
+            prop = property
+            props.push(prop)
+            console.log(prop)
+            console.log(source[prop])
+        }
+
+        collection.forEach((e)=>{
+          let bandera = false
+          let banderaFinal = true
+          props.forEach( (f) => {
+            
+            if(e[f]===source[f]){
+              bandera=true
+            }else{
+              banderaFinal=false
+            }
+            console.log(e[f]===source[f])
+          })
+          if(bandera==true&&banderaFinal!==false){
+            arr.push(e)
+          }
+        })
+        return arr
+      }
+
+whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" });

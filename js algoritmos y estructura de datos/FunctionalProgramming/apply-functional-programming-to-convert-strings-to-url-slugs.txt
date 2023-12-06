@@ -1,0 +1,19 @@
+// Only change code below this line
+function urlSlug(title) {
+
+let min = title.toLowerCase()
+
+
+
+let arr = min.split(/\s+/)
+
+arr.map(e=>{if(e==="")
+arr.splice(0,1)})
+
+
+return arr.join("-")
+
+
+}
+// Only change code above this line
+urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone");

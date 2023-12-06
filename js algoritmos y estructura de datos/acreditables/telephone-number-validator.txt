@@ -1,0 +1,34 @@
+const regex = /\d/
+
+function telephoneCheck(str) {
+    let arr = [...str]
+    let newArr = []
+
+    newArr = arr.filter(function (e){
+        if(regex.test(e)===true){
+            return e
+        }
+    })
+
+    let result = false;
+    let provoleta = str.match(/-/g)|| [];
+    let x = provoleta.length < 3
+
+    if((newArr[0]==1&&newArr.length==11&&x)){
+        result=true
+    }
+    if(newArr.length==10&&x){
+        result = true
+    }
+    if(arr[0]=="("&&arr[4]!=")"||arr[0]==")"||arr[0]=="-"||
+    arr[1]!=="("&&arr[5]==")"
+    ||arr[0]==5&&arr[4]=="-"
+    ||arr[9]=="?"){
+        result=false
+    }
+
+   
+
+    return result
+  }
+telephoneCheck("555-555-5555");

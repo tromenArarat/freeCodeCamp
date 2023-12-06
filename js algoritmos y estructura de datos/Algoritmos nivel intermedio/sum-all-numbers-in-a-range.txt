@@ -1,0 +1,23 @@
+function sumAll(arr) {
+
+      let newArr = arr.sort(function(a,b){
+        return a === b ? 0 : a > b ? 1 : -1;
+      });
+      let primero = newArr.shift(newArr[1])
+      let ultimo = newArr.pop(newArr[0])
+      
+      for(let i=primero+1;i<ultimo;i++){
+        newArr.push(i)
+      }
+
+      newArr.push(ultimo)
+      newArr.unshift(primero)
+      
+      let suma = newArr.reduce((acum,e) => {
+        return acum + e
+      },0);
+
+      return suma;
+    }
+
+sumAll([1, 4]);

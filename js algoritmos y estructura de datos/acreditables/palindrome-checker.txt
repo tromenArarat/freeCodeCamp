@@ -1,0 +1,14 @@
+function palindrome(str) {
+    const strLimpia = str.replace(/\W|_/g, "").toLowerCase();
+
+    let j = strLimpia.length - 1;
+    for (let i = 0; i < strLimpia.length; i++) {
+        if (strLimpia.charAt(i) !== strLimpia.charAt(j)) {
+            return false
+        }
+        j--;
+    }
+    return true;
+}
+
+palindrome("eye");

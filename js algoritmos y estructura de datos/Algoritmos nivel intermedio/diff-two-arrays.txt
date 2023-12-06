@@ -1,0 +1,19 @@
+function diffArray(arr1, arr2) {
+    let newArr = [];
+    let moreNewArr = []
+
+    console.log(arr1.indexOf(4))
+
+  newArr = arr1.filter(function (e){ 
+    return arr2.indexOf(e)==-1
+    }
+)
+
+moreNewArr = arr2.filter(function (e){ 
+    return arr1.indexOf(e)==-1
+    }
+)
+  
+    return newArr.concat(moreNewArr);
+  }
+diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]);

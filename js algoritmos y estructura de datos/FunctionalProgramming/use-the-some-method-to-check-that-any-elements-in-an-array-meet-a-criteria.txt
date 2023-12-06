@@ -1,0 +1,10 @@
+function checkPositive(arr) {
+  // Only change code below this line
+
+let chelin = arr.some( (cv) => cv>0)
+
+return chelin
+  // Only change code above this line
+}
+
+checkPositive([1, 2, 3, -4, 5]);

@@ -1,0 +1,60 @@
+const switchealo = (este,uno,penta,diez) => {
+  switch (este){
+    case 1:
+      return uno;
+    case 2:
+      return uno.concat(uno);
+    case 3:
+      return uno.concat(uno).concat(uno);
+    case 4:
+      return uno.concat(penta);
+    case 5:
+      return penta;
+    case 6:
+      return penta.concat(uno);
+    case 7:
+      return penta.concat(uno).concat(uno);
+    case 8:
+      return penta.concat(uno).concat(uno).concat(uno);
+    case 9:
+      return uno.concat(diez);
+  }
+}
+
+const convertToRoman = (arabigo) => {
+
+  let palito = "I"
+  let victoria = "V"
+  let equis = "X"
+  let cincuenta = "L"
+  let cien = "C"
+  let quinientos = "D"
+  let mil = "M"
+
+  let milena = Math.floor(arabigo/1000);
+  let centena = Math.floor(arabigo%1000/100);
+  let decena = Math.floor(((arabigo%1000)%100)/10);
+  let unidad = ((arabigo%1000)%100)%10;
+
+  let primero = ""
+  let segundo = ""
+  let tercero = ""
+  let cuarto = ""
+
+  
+  if(milena!=0){
+    primero = switchealo(milena, mil, "K", "W");
+  }
+  if(centena!=0){
+    segundo = switchealo(centena, cien, quinientos, mil);
+  }
+  if(decena!=0){
+    tercero = switchealo(decena, equis, cincuenta, cien);
+  }
+  if(unidad!=0){
+    cuarto = switchealo(unidad, palito, victoria, equis);
+  }
+  return primero.concat(segundo).concat(tercero).concat(cuarto)
+}
+
+convertToRoman(36);

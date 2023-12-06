@@ -1,0 +1,22 @@
+function translatePigLatin(str) {
+let vocales = /[aeiouAEIOU]/
+let rgx = /^[aeiouAEIOU\d\W]+/
+if(vocales.test(str)==false){
+  str = str.concat("ay")
+}else{
+
+
+if(rgx.test(str)==false){
+  let primeraVocal = str.match(vocales)
+  let consonantes = str.substring(0,primeraVocal.index)
+  str = str.substring(primeraVocal.index,str.length)
+  str = str.concat(consonantes).concat("ay")
+}else{
+  str = str.concat("way")
+}
+
+}
+  return str;
+}
+
+translatePigLatin("consonant");

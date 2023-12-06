@@ -1,0 +1,21 @@
+
+function extirpa(cadena,posicion){
+  const letras = [];
+    if(posicion===cadena.length){
+      return letras;
+    }else{
+      letras.unshift(cadena.substring(posicion,(posicion+1)));
+      return letras.concat(extirpa(cadena,posicion+1))
+    }
+  }
+
+  function mutation(arr) {
+    const a = extirpa(arr[1],0)
+    for (let i=0;i<a.length;i++){
+      if(arr[0].toLowerCase().indexOf(a[i].toLowerCase())===(-1)){
+        return false;
+      }
+    }
+    return true;
+   }  
+mutation(["hello", "hey"]);

@@ -1,0 +1,11 @@
+function confirmEnding(str, target) {
+  const letras = target.length;
+
+  if(str.substring(str.length-letras,str.length)===target){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+confirmEnding("Bastian", "n");

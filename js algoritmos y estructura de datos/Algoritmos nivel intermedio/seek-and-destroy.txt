@@ -1,0 +1,28 @@
+function destroyer(arr,...args) {
+
+       
+    console.log(arr)
+    console.log(args)
+
+    let newArr=[]
+
+    args.forEach(function(e){
+        arr.forEach((f)=> {
+            if(e===f){
+                arr.splice(arr.indexOf(f),1)
+            }
+        })
+    })
+
+args.forEach(function(e){
+        arr.forEach((f)=> {
+            if(e===f){
+                arr.splice(arr.indexOf(f),1)
+            }
+        })
+    })
+
+    return arr
+
+    }
+destroyer([1, 2, 3, 1, 2, 3], 2, 3);

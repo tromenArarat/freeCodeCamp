@@ -1,0 +1,196 @@
+    /*
+        VARIABLES GLOBALES
+    */
+
+    let moneda = 0.00;
+    let estado = ""
+    let resultado = {
+        status: estado,
+        change: []
+    };
+    let suma = 0.00;
+    let vuelto = 0.00;
+
+    /*
+        FUNCIÓN PRINCIPAL
+    */
+
+function checkCashRegister (price, cash, cid) {
+    vuelto = (cash-price).toFixed(2);
+    let respuesta = darVuelto(vuelto,cid,8) 
+    return respuesta
+}
+    
+
+    /*
+        FUNCIÓN SECUNDARIA
+    */
+
+function darVuelto(vuelto,caja,monedaIndex){
+    
+    if(monedaIndex==0&&suma.toFixed(2)!=vuelto){
+        moneda = 0.01
+        //  0-- Si vuelto > caja
+        /// chequear si pasa el resultado con sus valores acumulados
+        if(vuelto>caja[0][1]){
+            let newStatus = "INSUFFICIENT_FUNDS"
+            resultado.status = newStatus
+        }
+        // 1-- Si el vuelto es igual a la moneda y queda una
+        if((suma+moneda).toFixed(2)==vuelto&&caja[monedaIndex][1].toFixed(2)==moneda){
+            caja[monedaIndex][1]=caja[monedaIndex][1]-moneda
+            let newStatus = "CLOSED"
+            resultado.status = newStatus
+            //vieneDado(moneda)
+                resultado.change.unshift(["ONE HUNDRED",0])
+                resultado.change.unshift(["TWENTY",0])
+                resultado.change.unshift(["TEN",0])
+                resultado.change.unshift(["FIVE",0])
+                resultado.change.unshift(["ONE",0])
+                resultado.change.unshift(["QUARTER",0])
+                resultado.change.unshift(["DIME",0])
+                resultado.change.unshift(["NICKEL",0])
+                resultado.change.pop(["NICKEL",0])
+                resultado.change.unshift(["PENNY",0.5])
+        }
+        // 2-- Si el vuelto es mayor a lo que hay en caja
+        if(vuelto>moneda&&caja[monedaIndex][1]>moneda){
+            caja[monedaIndex][1]=caja[monedaIndex][1]-moneda
+            let newStatus = "OPEN"
+            resultado.status = newStatus
+            vieneDado(moneda)
+            darVuelto(vuelto,caja,monedaIndex)
+        }
+        
+        // 3-- Si el vuelto es menor a lo que hay en caja
+        if(vuelto<caja[monedaIndex][1]){
+            caja[monedaIndex][1]=(caja[monedaIndex][1]-moneda).toFixed(2)
+            let newStatus = "OPEN"
+            resultado.status = newStatus
+            //vieneDado(moneda)
+            darVuelto(vuelto,caja,monedaIndex)
+        }
+        
+    }else{
+        
+        switch(monedaIndex){
+            case 1:
+                moneda=0.05
+                chequeo(vuelto,caja,moneda,monedaIndex)
+                break;
+            case 2:
+                moneda=0.1
+                chequeo(vuelto,caja,moneda,monedaIndex)
+                break;
+            case 3:
+                moneda=0.25
+                chequeo(vuelto,caja,moneda,monedaIndex)
+                break;
+            case 4:
+                moneda=1
+                chequeo(vuelto,caja,moneda,monedaIndex)
+                break;
+            case 5:
+                moneda=5
+                chequeo(vuelto,caja,moneda,monedaIndex)
+                break;
+            case 6:
+                moneda=10
+                chequeo(vuelto,caja,moneda,monedaIndex)
+                break;
+            case 7:
+                moneda=20
+                chequeo(vuelto,caja,moneda,monedaIndex)
+                break;
+            case 8:
+                moneda=100
+                chequeo(vuelto,caja,moneda,monedaIndex)
+                break;
+        }
+    }
+    
+    resultado.change.sort((a, b) => b[1] - a[1])
+    
+    return resultado
+}
+    /*
+        FUNCIÓN DE TERCER ORDEN
+    */
+
+function vieneDado(moneda){
+    let monedaTxt = ""
+    switch(moneda){
+        case 0.01:
+            monedaTxt="PENNY"
+            break;
+        case 0.05:
+            monedaTxt="NICKEL"
+            break;
+        case 0.1:
+            monedaTxt="DIME"
+            break;
+        case 0.25:
+            monedaTxt="QUARTER"
+            break;
+        case 1:
+            monedaTxt="ONE"
+            break;
+        case 5:
+            monedaTxt="FIVE"
+            break;
+        case 10:
+            monedaTxt="TEN"
+            break;
+        case 20:
+            monedaTxt="TWENTY"
+            break;
+        case 100:
+            monedaTxt="ONE HUNDRED"
+            break;
+    }
+
+    if(monedaExist(monedaTxt)){
+        suma = suma + moneda
+        let monedinIndex = resultado.change.
+            indexOf(monedaTxt)+1
+        resultado.change[monedinIndex][1] += moneda;
+           
+    }else{
+        suma = suma + moneda
+        resultado.change.unshift([monedaTxt,moneda])
+    }
+}
+
+// Función de segundo orden
+function chequeo(vuelto,caja,moneda,monedaIndex){
+ if(suma<vuelto){
+    if(vuelto<moneda){
+        darVuelto(vuelto,caja,monedaIndex-1)
+    }
+
+    if( vuelto > moneda && caja[monedaIndex][1]>0&&suma+moneda<=vuelto){
+        caja[monedaIndex][1]=caja[monedaIndex][1]-moneda
+        let newStatus = "OPEN"
+            resultado.status = newStatus
+        vieneDado(moneda)
+        darVuelto(vuelto,caja,monedaIndex)
+    }
+    if( vuelto > moneda && caja[monedaIndex][1]<vuelto){
+        
+        darVuelto(vuelto,caja,monedaIndex-1)
+    }
+}
+}
+// Función de cuarto orden
+function monedaExist(monedaTxt){
+    for (let i = 0; i < resultado.change.length; i++) {
+      if (resultado.change[i][0] === monedaTxt) {
+        return true
+      }else{
+        return false
+      }
+}
+
+}
+
+checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])
